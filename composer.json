@@ -1,0 +1,71 @@
+{
+    "name": "axleus/axleus-core",
+    "description": "Axleus core package",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "axleus",
+        "webinertia",
+        "mezzio"
+    ],
+    "homepage": "https://github.com/orgs/axleus/discussions",
+    "authors": [
+        {
+            "name": "Joey Smith",
+            "email": "jsmith@webinertia.net",
+            "homepage": "https://webinertia.net/"
+        }
+    ],
+    "suggest": {
+        "laminas/laminas-component-installer" : "^3.0, required for configuration injection"
+    },
+    "require": {
+        "php": "~8.1.0 || ~8.2.0",
+        "laminas/laminas-validator": "^2.32.0"
+    },
+    "require-dev": {
+        "laminas/laminas-coding-standard": "^2.5",
+        "phpunit/phpunit": "^10.2",
+        "psalm/plugin-phpunit": "^0.18.4",
+        "laminas/laminas-test": "^4.8",
+        "phpstan/extension-installer": "^1.2",
+        "vimeo/psalm": "^5.7.7"
+    },
+    "extra": {
+        "laminas": {
+            "config-provider": "Axleus\\ConfigProvider"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Axleus\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Axleus\\": "test/"
+        }
+    },
+    "scripts": {
+        "check": [
+            "@cs-check",
+            "@static-analysis",
+            "@test"
+        ],
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
+        "static-analysis": "psalm --shepherd --stats",
+        "test": "phpunit --colors=always",
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
+        "phpstan": "php vendor/bin/phpstan analyse --xdebug"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        },
+        "platform": {
+            "php": "8.1.99"
+        }
+    }
+}
