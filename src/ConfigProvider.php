@@ -16,7 +16,7 @@ final class ConfigProvider
     {
         return [
             'dependencies'        => $this->getDependencies(),
-           // 'middleware_pipeline' => $this->getPipelineConfig(),
+            'middleware_pipeline' => $this->getPipelineConfig(),
             'routes'              => $this->getRoutes(),
             'tactician'           => $this->getTacticianConfig(),
         ];
@@ -46,7 +46,7 @@ final class ConfigProvider
     public function getPipelineConfig(): array
     {
         return [
-            [
+            [// this must be in the pipeline or ajax request fail
                 'middleware' => Middleware\AjaxRequestMiddleware::class,
                 'priority' => 4,
             ],
@@ -74,6 +74,4 @@ final class ConfigProvider
             ],
         ];
     }
-
-
 }
