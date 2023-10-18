@@ -81,9 +81,9 @@
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
         "static-analysis": "psalm --shepherd --stats",
+        "update-baseline": "psalm --update-baseline",
         "test": "phpunit --colors=always",
-        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
-        "phpstan": "php vendor/bin/phpstan analyse --xdebug"
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
     "config": {
         "sort-packages": true,
