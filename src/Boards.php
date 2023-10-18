@@ -8,6 +8,6 @@ final class Boards
 {
     public function __construct()
     {
-        return 'running';
+        return 'running ';
     }
 }
