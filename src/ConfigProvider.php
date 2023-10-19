@@ -60,23 +60,23 @@ final class ConfigProvider
         return [
             [// piped first
                 'middleware' => ErrorHandler::class,
-                'priority'   => 10006,
+                'priority'   => 10400,
             ],
             [
                 'middleware' => ServerUrlMiddleware::class,
-                'priority'   => 10005,
+                'priority'   => 10300,
             ],
             [
                 'middleware' => SessionMiddleware::class,
-                'priority'   => 10004,
+                'priority'   => 10200,
             ],
             [// this must be in the pipeline or ajax request fail
                 'middleware' => Middleware\AjaxRequestMiddleware::class,
-                'priority'   => 10001,
+                'priority'   => 10100,
             ],
             /**
              * Middleware that needs to run for all request should be piped here at a
-             * priority of 10000 which means they will be piped in the other they are
+             * priority of 10000 which means they will be piped in the order they are
              * discovered regardless of where they are piped from.
              * Piping order will be determined from the order of their ConfigProviders in
              * config.php
@@ -84,7 +84,7 @@ final class ConfigProvider
              */
             [
                 'middleware' => RouteMiddleware::class,
-                'priority'   => 9999,
+                'priority'   => 9900,
             ],
             [
                 'middleware' => [// these are piped together at the same priority so they are piped in the order discovered
@@ -92,27 +92,27 @@ final class ConfigProvider
                     ImplicitOptionsMiddleware::class,
                     MethodNotAllowedMiddleware::class,
                 ],
-                'priority'   => 9998,
+                'priority'   => 9800,
             ],
             [
                 'middleware' => UrlHelperMiddleware::class,
-                'priority'   => 9997,
+                'priority'   => 9700,
+            ],
+            [
+                'middleware' => DefaultParamsMiddleware::class,
+                'priority'   => 9600,
             ],
             /**
              * pipe middleware here that needs to introspect the routing result
              * Priority range 2000 - 5000
              */
-            [
-                'middleware' => DefaultParamsMiddleware::class,
-                'priority'   => 1,
-            ],
             [// dispatch at 0
                 'middleware' => DispatchMiddleware::class,
                 'priority'   => 0,
             ],
             [// pipe this VERY late so that everyone has a chance to respond before hitting it
                 'middleware' => NotFoundHandler::class,
-                'priority'   => -500,
+                'priority'   => -10000,
             ],
         ];
     }
@@ -132,7 +132,7 @@ final class ConfigProvider
     public function getTacticianConfig(): array
     {
         return [
-            'default-extractor'  => NamedCommandExtractor::class,
+            'default-extractor' => NamedCommandExtractor::class,
             'middleware' => [
                 EventMiddleware::class => 50,
             ],
