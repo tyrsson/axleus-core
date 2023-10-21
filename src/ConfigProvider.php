@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Axleus;
 
-use Axleus\Middleware\DefaultParamsMiddleware;
+use Axleus\Constants;
 use Laminas\Stratigility\Middleware\ErrorHandler;
+use League\Tactician\CommandEvents\EventMiddleware;
+use League\Tactician\Plugins\NamedCommand\NamedCommandExtractor;
+use Mezzio\Application;
+use Mezzio\Container\ApplicationConfigInjectionDelegator;
 use Mezzio\Handler\NotFoundHandler;
 use Mezzio\Helper\ServerUrlMiddleware;
 use Mezzio\Helper\UrlHelperMiddleware;
@@ -15,11 +19,6 @@ use Mezzio\Router\Middleware\ImplicitOptionsMiddleware;
 use Mezzio\Router\Middleware\MethodNotAllowedMiddleware;
 use Mezzio\Router\Middleware\RouteMiddleware;
 use Mezzio\Session\SessionMiddleware;
-///////////////
-use League\Tactician\CommandEvents\EventMiddleware;
-use League\Tactician\Plugins\NamedCommand\NamedCommandExtractor;
-use Mezzio\Application;
-use Mezzio\Container\ApplicationConfigInjectionDelegator;
 use TacticianModule\Locator\ClassnameLaminasLocator;
 
 final class ConfigProvider
@@ -60,19 +59,19 @@ final class ConfigProvider
         return [
             [// piped first
                 'middleware' => ErrorHandler::class,
-                'priority'   => 10400,
+                'priority'   => Constants::PIPE_PRIORITIES[ErrorHandler::class],
             ],
             [
                 'middleware' => ServerUrlMiddleware::class,
-                'priority'   => 10300,
+                'priority'   => Constants::PIPE_PRIORITIES[ServerUrlMiddleware::class],
             ],
             [
                 'middleware' => SessionMiddleware::class,
-                'priority'   => 10200,
+                'priority'   => Constants::PIPE_PRIORITIES[SessionMiddleware::class],
             ],
             [// this must be in the pipeline or ajax request fail
                 'middleware' => Middleware\AjaxRequestMiddleware::class,
-                'priority'   => 10100,
+                'priority'   => Constants::PIPE_PRIORITIES[Middleware\AjaxRequestMiddleware::class],
             ],
             /**
              * Middleware that needs to run for all request should be piped here at a
@@ -84,7 +83,7 @@ final class ConfigProvider
              */
             [
                 'middleware' => RouteMiddleware::class,
-                'priority'   => 9900,
+                'priority'   => Constants::PIPE_PRIORITIES[RouteMiddleware::class],
             ],
             [
                 'middleware' => [// these are piped together at the same priority so they are piped in the order discovered
@@ -92,27 +91,27 @@ final class ConfigProvider
                     ImplicitOptionsMiddleware::class,
                     MethodNotAllowedMiddleware::class,
                 ],
-                'priority'   => 9800,
+                'priority'   => Constants::PIPE_PRIORITIES[ImplicitHeadMiddleware::class],
             ],
             [
                 'middleware' => UrlHelperMiddleware::class,
-                'priority'   => 9700,
+                'priority'   => Constants::PIPE_PRIORITIES[UrlHelperMiddleware::class],
             ],
             [
-                'middleware' => DefaultParamsMiddleware::class,
-                'priority'   => 9600,
+                'middleware' => Middleware\DefaultParamsMiddleware::class,
+                'priority'   => Constants::PIPE_PRIORITIES[Middleware\DefaultParamsMiddleware::class],
             ],
             /**
              * pipe middleware here that needs to introspect the routing result
-             * Priority range 2000 - 5000
+             * AxleusPluginManagerInterface::ROUTE_RESULT_MIDDLEWARE_PRIORITY = 8000
              */
             [// dispatch at 0
                 'middleware' => DispatchMiddleware::class,
-                'priority'   => 0,
+                'priority'   => Constants::PIPE_PRIORITIES[DispatchMiddleware::class],
             ],
             [// pipe this VERY late so that everyone has a chance to respond before hitting it
                 'middleware' => NotFoundHandler::class,
-                'priority'   => -10000,
+                'priority'   => Constants::PIPE_PRIORITIES[NotFoundHandler::class],
             ],
         ];
     }
