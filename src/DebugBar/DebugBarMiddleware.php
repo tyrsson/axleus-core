@@ -18,12 +18,12 @@ class DebugBarMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-
+        $request = $request->withAttribute(
+            DebugBar::class,
+            $this->debugBar
+        );
         return $handler->handle(
-            $request->withAttribute(
-                DebugBar::class,
-                $this->debugBar
-            )
+            $request
         );
     }
 }
