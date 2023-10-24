@@ -26,10 +26,11 @@ final class ConfigProvider
     public function __invoke(): array
     {
         return [
-            'dependencies'        => $this->getDependencies(),
-            'middleware_pipeline' => $this->getPipelineConfig(),
-            'routes'              => $this->getRoutes(),
-            'tactician'           => $this->getTacticianConfig(),
+            'dependencies'          => $this->getDependencies(),
+            'middleware_pipeline'   => $this->getPipelineConfig(),
+            'routes'                => $this->getRoutes(),
+            'tactician'             => $this->getTacticianConfig(),
+            SettingsProvider::class => $this->getSettings(),
         ];
     }
 
@@ -136,5 +137,10 @@ final class ConfigProvider
                 EventMiddleware::class => 50,
             ],
         ];
+    }
+
+    public function getSettings(): array
+    {
+        return [];
     }
 }

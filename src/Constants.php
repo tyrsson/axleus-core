@@ -32,8 +32,8 @@ interface Constants
         UrlHelperMiddleware::class                        => 9700,
         Middleware\DefaultParamsMiddleware::class         => 9600,
         // PluginInterface::ROUTE_RESULT_MIDDLEWARE_PRIORITY => 8000
+        DebugBar\PhpDebugBarMiddleware::class             => 1, // default from package is 1000
         DispatchMiddleware::class                         => 0,
-        DebugBar\PhpDebugBarMiddleware::class             => 10599, // default from package is 1000
         NotFoundHandler::class                            => -10000,
     ];
 }
