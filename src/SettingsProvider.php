@@ -6,8 +6,14 @@ namespace Axleus;
 
 final class SettingsProvider
 {
-    public function __invoke()
+    /**
+     * Return all non editable settings for application/module
+     * @return array
+     */
+    public function __invoke(): array
     {
-
+        return [
+            'axleus-key' => 'axleus-value',
+        ];
     }
 }

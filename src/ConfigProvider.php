@@ -25,12 +25,13 @@ final class ConfigProvider
 {
     public function __invoke(): array
     {
+        $settingsProvider = new SettingsProvider();
         return [
             'dependencies'          => $this->getDependencies(),
             'middleware_pipeline'   => $this->getPipelineConfig(),
             'routes'                => $this->getRoutes(),
             'tactician'             => $this->getTacticianConfig(),
-            SettingsProvider::class => $this->getSettings(),
+            SettingsProvider::class => $settingsProvider(),
         ];
     }
 
@@ -137,10 +138,5 @@ final class ConfigProvider
                 EventMiddleware::class => 50,
             ],
         ];
-    }
-
-    public function getSettings(): array
-    {
-        return [];
     }
 }
