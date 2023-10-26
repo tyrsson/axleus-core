@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Axleus;
 
 use Axleus\Constants;
+use Laminas\EventManager\EventManager;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\EventManager\SharedEventManager;
+use Laminas\EventManager\SharedEventManagerInterface;
 use Laminas\Stratigility\Middleware\ErrorHandler;
 use League\Tactician\CommandEvents\EventMiddleware;
 use League\Tactician\Plugins\NamedCommand\NamedCommandExtractor;
@@ -38,15 +42,23 @@ final class ConfigProvider
     public function getDependencies(): array
     {
         return [
+            'aliases'    => [
+                EventManagerInterface::class       => EventManager::class,
+                'EventManager'                     => EventManager::class,
+                SharedEventManagerInterface::class => SharedEventManager::class,
+            ],
             'delegators' => [
                 Application::class => [
                     ApplicationConfigInjectionDelegator::class,
                 ],
             ],
             'factories' => [
+                EventManager::class                       => EventManagerFactory::class,
+                EventMiddleware::class                    => CommandBus\EventMiddlewareFactory::class,
+                SharedEventManager::class                 => fn(): SharedEventManager => new SharedEventManager(),
                 Middleware\AjaxRequestMiddleware::class   => Middleware\AjaxRequestMiddlewareFactory::class,
                 Middleware\DefaultParamsMiddleware::class => Middleware\DefaultParamsMiddlewareFactory::class,
-                EventMiddleware::class                    => CommandBus\EventMiddlewareFactory::class,
+
             ],
             'invokables' => [
                 Handler\PingHandler::class     => Handler\PingHandler::class,
