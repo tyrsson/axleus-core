@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace Axleus;
 
-final class SettingsProvider
+class SettingsProvider
 {
+    final public const SETTINGS_PATH = __DIR__ . '/../../../../data/settings/';
     /**
-     * Return all non editable settings for application/module
-     * @return array
+     * Extending class should define this property as the target file name
      */
+    protected ?string $file = null;
+
     public function __invoke(): array
     {
-        return [
-            'axleus-key' => 'axleus-value',
-        ];
+        if ($this->file !== null) {
+            return [static::class => include_once self::SETTINGS_PATH . $this->file];
+        }
+        return [];
     }
 }

@@ -37,7 +37,7 @@ trait RepositoryTrait
 
     public function findManyByColumn(array $titles): ResultSetInterface { }
 
-    //public function fetchAll(): ResultSetInterface { }
+    public function fetchAll(): ResultSetInterface { }
 
     public function delete(EntityInterface $entity): int { }
 }

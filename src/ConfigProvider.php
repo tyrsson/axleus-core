@@ -35,7 +35,7 @@ final class ConfigProvider
             'middleware_pipeline'   => $this->getPipelineConfig(),
             'routes'                => $this->getRoutes(),
             'tactician'             => $this->getTacticianConfig(),
-            SettingsProvider::class => $settingsProvider(),
+            SettingsProvider::class => [],
         ];
     }
 

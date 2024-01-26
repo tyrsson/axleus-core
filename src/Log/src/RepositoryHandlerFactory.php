@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Log;
 
+use Axleus\Db\TableIdentifier;
 use Laminas\Db\Adapter\Adapter;
 use Laminas\Db\Adapter\AdapterInterface;
 use Laminas\Db\TableGateway\TableGateway;
@@ -27,7 +28,6 @@ final class RepositoryHandlerFactory
         /** @var Adapter */
         $adapter = $container->get(AdapterInterface::class);
 
-        //$table = $config['log']['table'];
         return new RepositoryHandler(
             new TableGateway(
                 $config['log']['table'],

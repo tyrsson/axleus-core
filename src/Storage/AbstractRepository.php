@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Axleus\Storage;
 
 use Laminas\Hydrator\ReflectionHydrator;
-use Webinertia\Db;
+use Axleus\Db;
 
 class AbstractRepository implements Db\RepositoryInterface, Db\RepositoryCommandInterface
 {
