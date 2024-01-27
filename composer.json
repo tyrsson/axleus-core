@@ -19,7 +19,9 @@
         "laminas/laminas-component-installer" : "^3.0, required for configuration injection"
     },
     "require": {
-        "php": "~8.1.0 || ~8.2.0"
+        "php": "~8.1.0 || ~8.2.0",
+        "axleus/axleus-db": "1.0.x-dev",
+        "axleus/axleus-log": "1.0.x-dev"
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "^2.5",

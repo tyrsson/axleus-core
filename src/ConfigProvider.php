@@ -10,7 +10,7 @@ use Laminas\EventManager\EventManagerInterface;
 use Laminas\EventManager\SharedEventManager;
 use Laminas\EventManager\SharedEventManagerInterface;
 use Laminas\Stratigility\Middleware\ErrorHandler;
-use League\Tactician\CommandEvents\EventMiddleware;
+//use League\Tactician\CommandEvents\EventMiddleware;
 use League\Tactician\Plugins\NamedCommand\NamedCommandExtractor;
 use Mezzio\Application;
 use Mezzio\Container\ApplicationConfigInjectionDelegator;
@@ -52,7 +52,8 @@ class ConfigProvider
             ],
             'factories' => [
                 EventManager::class                       => EventManagerFactory::class,
-                EventMiddleware::class                    => CommandBus\EventMiddlewareFactory::class,
+                //EventMiddleware::class                    => CommandBus\EventMiddlewareFactory::class,
+                CommandBus\Event\EventMiddleware::class        => CommandBus\EventMiddlewareFactory::class,
                 SharedEventManager::class                 => fn(): SharedEventManager => new SharedEventManager(),
                 Middleware\AjaxRequestMiddleware::class   => Middleware\AjaxRequestMiddlewareFactory::class,
                 Middleware\DefaultParamsMiddleware::class => Middleware\DefaultParamsMiddlewareFactory::class,
@@ -145,7 +146,7 @@ class ConfigProvider
         return [
             'default-extractor' => NamedCommandExtractor::class,
             'middleware' => [
-                EventMiddleware::class => 50,
+                CommandBus\Event\EventMiddleware::class => 50,
             ],
         ];
     }

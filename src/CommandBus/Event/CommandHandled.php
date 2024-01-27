@@ -7,7 +7,7 @@ namespace Axleus\CommandBus\Event;
 use Axleus\CommandBus\Event\CommandEventInterface;
 use Laminas\EventManager\Event;
 
-final class CommandReceived extends Event implements CommandEventInterface
+final class CommandHandled extends Event implements CommandEventInterface
 {
     use HasCommandTrait;
 
@@ -22,6 +22,6 @@ final class CommandReceived extends Event implements CommandEventInterface
     public function __construct(
         protected $target = null
     ) {
-        parent::__construct(CommandEventInterface::COMMAND_RECEIVED_EVENT);
+        parent::__construct(CommandEventInterface::COMMAND_HANDLED_EVENT);
     }
 }
