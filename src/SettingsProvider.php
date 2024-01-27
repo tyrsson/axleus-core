@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Axleus;
 
+use function file_exists;
+
 class SettingsProvider
 {
     final public const SETTINGS_PATH = __DIR__ . '/../../../../data/settings/';
@@ -14,8 +16,8 @@ class SettingsProvider
 
     public function __invoke(): array
     {
-        if ($this->file !== null) {
-            return [static::class => include_once self::SETTINGS_PATH . $this->file];
+        if ($this->file !== null && file_exists(self::SETTINGS_PATH . $this->file)) {
+            return include_once self::SETTINGS_PATH . $this->file;
         }
         return [];
     }
